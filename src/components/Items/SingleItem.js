@@ -8,13 +8,13 @@ export default function SingleItem(props) {
   return (
     
       <div className="card border-dark" style={SingleItemStyle} onClick={HandleProductPageLoad}>
-        <img src={props.item.pics[0]} className="card-img-top" alt="..." style={{ width: '18rem', height: '25rem' }} />
+        <img src={props.item.pics[0]} className="card-img-top" alt="..." style={{ width: '18vw',height:'50vh',margin:'auto'}} />
         <div className="card-head">
           <h2>{props.item.title}</h2>
         </div>
         <div className="card-body">
           <p className="card-text">
-            {props.item.desc}
+            {props.item.desc.slice(0,20)}
           </p>
           
         </div>

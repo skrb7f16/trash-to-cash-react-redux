@@ -12,7 +12,7 @@ export default function AddProduct() {
 
 
   return (
-    <div>
+    <div style={{minHeight:'85vh'}}>
       {stepNo === 0 ?
         <StepOnePage db={db} SetStepNo={SetStepNo} stepNo={stepNo} /> :
         stepNo === 1 ? <StepTwoPage db={db} SetStepNo={SetStepNo}  stepNo={stepNo}/> :

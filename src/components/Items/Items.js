@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import data from '../../assets/trash-to-cash-20037-default-rtdb-feeds-export.json'
 import SingleItem from './SingleItem'
-import { getDatabase, ref, onValue } from 'firebase/database'
+import { getDatabase, ref, onValue,orderByChild ,query} from 'firebase/database'
 import firebaseApp from '../../firebase-service'
 export default function Items() {
   
@@ -10,14 +10,19 @@ export default function Items() {
   
   useEffect(() => {
     
-    const starCountRef = ref(db, '/feeds');
-    onValue(starCountRef, (snapshot) => {
+    const itemRef =query(ref(db, '/feeds'),orderByChild('at'))
+    onValue(itemRef, (snapshot) => {
       const data = snapshot.val();
       if(data!==null){
         setItem([])
+        var tempItem=[]
         Object.values(data).map(items=>{
-          setItem(old=>[...old,items])
+          
+          tempItem.push(items)
+          //setItem(item.reverse())
         });
+        tempItem.reverse()
+        setItem(tempItem)
         
       } 
     });
@@ -27,13 +32,17 @@ export default function Items() {
 
 
   return (
+    <>
+    <h2 className='text-center'>Latest Products</h2>
     <div style={ItemBoxStyle}>
-      {item.map((item, key) => {
-
-        return <SingleItem item={item} key={key} />
-      })}
+      
+      {item.length>0?item.map((i, key) => {
+        
+        return <SingleItem item={i} key={key} />
+      }):"LOADING"}
 
     </div>
+    </>
   )
 }
 const ItemBoxStyle = {
@@ -41,8 +50,9 @@ const ItemBoxStyle = {
   justifyContent: 'space-around',
   alignItems: 'center',
   flexWrap: 'wrap',
-  margin: '10px',
-  overflowY:'overflow-y',
-  width:'100vw',
-  height:'100vh'
+  margin: 'auto',
+  overflowY:'hidden',
+  
+  width:'95vw',
+  minHeight:'100vh'
 }

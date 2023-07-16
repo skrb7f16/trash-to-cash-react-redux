@@ -39,7 +39,7 @@ export default function UserComponent() {
     });
 
   },[])
-  return db === null ? "LOADING" : <div>
+  return db === null ? "LOADING" : <div style={{minHeight:'85vh'}}>
     <>
       <div className="jumbotron">
         <div className="container">

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function About() {
   return (
     <>
-      <div className="card">
+      <div className="card" style={{minHeight:'85vh'}}>
         <div className="card-header">About us</div>
         <div className="card-body">
           <h5 className="card-title">Motivation</h5>

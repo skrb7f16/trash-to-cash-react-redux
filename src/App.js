@@ -6,15 +6,12 @@ import Items from './components/Items/Items';
 import About from './components/About/About';
 import Authentication from './components/Authentication/Authentication';
 import Product from './components/Product/Product';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import SetCurrentUser from './state/actionCreaters/UserAuthData';
-
-
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from './firebase-service';
 import { getAuth } from 'firebase/auth';
 import UserComponent from './components/User/UserComponent';
 import AddProduct from './components/AddProduct/AddProduct';
+import Footer from './components/Footer/Footer';
 
 
 function App() {
@@ -28,8 +25,8 @@ function App() {
     })
     
   return (
-    <>
-      <BrowserRouter>
+    <div style={{overflowX:'hidden'}}>
+      <BrowserRouter >
         <Navbar />
         <Routes>
           <Route path='/items' element={<Items />}>
@@ -42,8 +39,9 @@ function App() {
           <Route path='/' element={<Home />}>
           </Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
