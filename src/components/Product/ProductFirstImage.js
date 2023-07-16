@@ -14,7 +14,10 @@ export default function ProductFirstImage(props) {
 }
 const ProductPictureStyle = {
     main: {
-        display: 'flex'
+        display: 'flex',
+        width:"50%" ,
+        justifyContent:'center',
+        padding:'2vh'
     },
     viewMore: { width: '18rem', background: 'grey', justifyContent: 'center', cursor: 'pointer' }
 

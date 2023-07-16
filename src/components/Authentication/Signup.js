@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import {getDatabase, ref, set} from 'firebase/database'
+import firebaseApp from '../../firebase-service'
 export default function Signup(props) {
     const auth = getAuth()
     const [email,SetEmail]=useState("")
@@ -8,7 +9,7 @@ export default function Signup(props) {
     const [confirmPassword,SetConfirmPassword]=useState("")
     const [lastName,setLastName]=useState("")
     const [firstName,SetFirstName]=useState("")
-    const db=getDatabase()
+    const db=getDatabase(firebaseApp,firebaseApp.options.databaseURL)
     const HandleSignup=(event)=>{
         event.preventDefault()
         createUserWithEmailAndPassword(auth,email,password).then((userCredential)=>{

@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import './App.css';
+
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Items from './components/Items/Items';
@@ -15,11 +14,13 @@ import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './firebase-service';
 import { getAuth } from 'firebase/auth';
 import UserComponent from './components/User/UserComponent';
-const app = initializeApp(firebaseConfig);
+import AddProduct from './components/AddProduct/AddProduct';
+
 
 function App() {
   const dispatch=useDispatch()
-  
+
+    
     getAuth().onAuthStateChanged((u)=>{
       if(u){
         dispatch(SetCurrentUser(u))
@@ -35,6 +36,7 @@ function App() {
           </Route>
           <Route path='/about' element={<About/>}></Route>
           <Route path='/auth' element={<Authentication/>}></Route>
+          <Route path='/addAProduct' element={<AddProduct/>}></Route>
           <Route path='/item/:id/:name' element={<Product/>}></Route>
           <Route path='/user/:name' element = {<UserComponent />} />
           <Route path='/' element={<Home />}>

@@ -1,88 +1,84 @@
 import { getAuth } from 'firebase/auth'
-import React from 'react'
-import {  useSelector } from 'react-redux/es/hooks/useSelector'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import SetCurrentUser from '../../state/actionCreaters/UserAuthData'
+import SetNavBar from '../../state/actionCreaters/NavBarSelectAction'
+import SingleItem from '../Items/SingleItem'
+import { getDatabase, ref, onValue } from 'firebase/database'
+import firebaseApp from '../../firebase-service'
+
+
 export default function UserComponent() {
-  const user = useSelector(state=>state.UserReducer)
-  const auth=getAuth()
-  const navigate=useNavigate()
-  const HandleLogout=()=>{
-    auth.signOut().then(()=>{
-      
+  const user = useSelector(state => state.UserReducer)
+  const auth = getAuth()
+  const db = getDatabase(firebaseApp, firebaseApp.options.databaseURL)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [items, setItems] = useState([])
+  const HandleLogout = () => {
+    auth.signOut().then(() => {
+      dispatch(SetCurrentUser(auth.currentUser))
+      dispatch(SetNavBar("home"))
       navigate("/")
     })
   }
-  return (
-    <div>
-      <>
-  <div className="jumbotron">
-    <div className="container">
-      <h1 className="display-3">Hello, {user.displayName}</h1>
-      <p>
-        This is a template for a simple marketing or informational website. It
-        includes a large callout called a jumbotron and three supporting pieces
-        of content. Use it as a starting point to create something more unique.
-      </p>
-      <p>
-        <Link className="btn btn-primary btn-lg" to="/addAProduct" role="button">
-          Post
-        </Link>
-        <span className="btn btn-danger btn-lg" role="button" onClick={HandleLogout}>
-          Logout
-        </span>
-      </p>
-    </div>
-  </div>
-  <div className="container">
-    {/* Example row of columns */}
-    <div className="row">
-      <div className="col-md-4">
-        <h2>Heading</h2>
-        <p>
-          Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-          tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-          massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-          euismod. Donec sed odio dui.{" "}
-        </p>
-        <p>
-          <a className="btn btn-secondary" href="#" role="button">
-            View details »
-          </a>
-        </p>
-      </div>
-      <div className="col-md-4">
-        <h2>Heading</h2>
-        <p>
-          Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-          tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-          massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-          euismod. Donec sed odio dui.{" "}
-        </p>
-        <p>
-          <a className="btn btn-secondary" href="#" role="button">
-            View details »
-          </a>
-        </p>
-      </div>
-      <div className="col-md-4">
-        <h2>Heading</h2>
-        <p>
-          Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas
-          eget quam. Vestibulum id ligula porta felis euismod semper. Fusce
-          dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-          fermentum massa justo sit amet risus.
-        </p>
-        <p>
-          <a className="btn btn-secondary" href="#" role="button">
-            View details »
-          </a>
-        </p>
-      </div>
-    </div>
-    <hr />
-  </div>
-</>
+  useEffect(() => {
+    const starCountRef = ref(db, '/feeds');
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      if(data!==null){
+        setItems([])
+        Object.values(data).map(items=>{
+          if(items.byId===auth.currentUser.uid)
+          setItems(old=>[...old,items])
+        });
+        
+      } 
+    });
 
-    </div>
-  )
+  },[])
+  return db === null ? "LOADING" : <div>
+    <>
+      <div className="jumbotron">
+        <div className="container">
+          <h1 className="display-3">Hello, {user !== null ? user.displayName : "User"}</h1>
+          <p>
+            This is a template for a simple marketing or informational website. It
+            includes a large callout called a jumbotron and three supporting pieces
+            of content. Use it as a starting point to create something more unique.
+          </p>
+          <p>
+            <Link className="btn btn-primary btn-lg" to="/addAProduct" role="button">
+              Post
+            </Link>
+            <span className="btn btn-danger btn-lg" role="button" onClick={HandleLogout}>
+              Logout
+            </span>
+          </p>
+        </div>
+      </div>
+      <div className="container" style={ItemBoxStyle}>
+
+
+        <hr />
+        {items.length!==0 ? items.map((v, k) => {
+          return <SingleItem item={v} key={k} />
+        }) : <h2>No products yet added</h2>}
+      </div>
+    </>
+
+  </div>
+}
+
+const ItemBoxStyle = {
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  margin: '10px',
+  overflowY:'overflow-y',
+  width:'100vw',
+ 
 }

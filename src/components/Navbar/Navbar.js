@@ -43,7 +43,8 @@ export default function Navbar() {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            {user===null?<Link className='nav-link' to='/auth' >Connect</Link>:<Link className="nav-link" to={"/user/"+user.displayName} style={navSelect==="user"?active:inactive}onClick={()=>dispatch(SetNavBar("user"))}>
+                            {user===null?<Link className='nav-link' to='/auth' style={navSelect==="user"?active:inactive} onClick={()=>dispatch(SetNavBar("user"))}  >Connect</Link>:
+                            <Link className="nav-link" to={"/user/"+user.displayName} style={navSelect==="user"?active:inactive} onClick={()=>dispatch(SetNavBar("user"))}>
                                 {user!==null?user.displayName:'user'}
                             </Link>}
                             

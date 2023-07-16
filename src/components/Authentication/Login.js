@@ -1,7 +1,19 @@
-import React from 'react'
-
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 export default function Login(props) {
-    
+    const auth = getAuth()
+    const [email, SetEmail] = useState("")
+    const [password, SetPassword] = useState("")
+    const dispatch = useDispatch()
+    const HandleLogin = (event) => {
+        event.preventDefault()
+        signInWithEmailAndPassword(auth, email, password).then((userCred) => {
+            console.log("loged in")
+            SetEmail('')
+            SetPassword('')
+        })
+    }
     return (
         <div>
             <div className="card-body">
@@ -16,6 +28,8 @@ export default function Login(props) {
                             className="form-control"
                             id="exampleInputEmail1"
                             aria-describedby="emailHelp"
+                            value={email}
+                            onChange={(event) => SetEmail(event.target.value)}
                         />
                         <div id="emailHelp" className="form-text">
                             We'll never share your email with anyone else.
@@ -29,15 +43,12 @@ export default function Login(props) {
                             type="password"
                             className="form-control"
                             id="exampleInputPassword1"
+                            value={password}
+                            onChange={(event) => SetPassword(event.target.value)}
                         />
                     </div>
-                    <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">
-                            Check me out
-                        </label>
-                    </div>
-                    <button type="submit" className="btn btn-primary">
+
+                    <button type="submit" className="btn btn-primary" onClick={HandleLogin}>
                         Submit
                     </button>
                 </form>

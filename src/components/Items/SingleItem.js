@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 export default function SingleItem(props) {
   const navigate=useNavigate()
   const HandleProductPageLoad=()=>{
@@ -16,6 +16,7 @@ export default function SingleItem(props) {
           <p className="card-text">
             {props.item.desc}
           </p>
+          
         </div>
       </div>
 
