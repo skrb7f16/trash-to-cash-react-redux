@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import data from '../../assets/trash-to-cash-20037-default-rtdb-feeds-export.json'
 import SingleItem from './SingleItem'
-import { getDatabase, ref, onValue,orderByChild ,query} from 'firebase/database'
+import { getDatabase, ref, onValue} from 'firebase/database'
 import firebaseApp from '../../firebase-service'
+
+function parseISOString(s) {
+
+  var b = s.split(/\D+/);
+  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+}
+
 export default function Items() {
   
   const db = getDatabase(firebaseApp, firebaseApp.options.databaseURL)
@@ -10,7 +16,7 @@ export default function Items() {
   
   useEffect(() => {
     
-    const itemRef =query(ref(db, '/feeds'),orderByChild('at'))
+    const itemRef =ref(db, '/feeds')
     onValue(itemRef, (snapshot) => {
       const data = snapshot.val();
       if(data!==null){
@@ -18,10 +24,15 @@ export default function Items() {
         var tempItem=[]
         Object.values(data).map(items=>{
           
-          tempItem.push(items)
-          //setItem(item.reverse())
+          return tempItem.push(items)
+          
         });
-        tempItem.reverse()
+        tempItem.sort((a,b)=>{
+          
+          let temp1=parseISOString(a['at'])
+          let temp2=parseISOString(b['at'])
+          return temp1<temp2?1:-1
+        })
         setItem(tempItem)
         
       } 

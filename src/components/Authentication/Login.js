@@ -1,17 +1,23 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import SetCurrentUser from '../../state/actionCreaters/UserAuthData'
+import { useNavigate } from 'react-router-dom'
 export default function Login(props) {
     const auth = getAuth()
     const [email, SetEmail] = useState("")
     const [password, SetPassword] = useState("")
     const dispatch = useDispatch()
+    const navigate=useNavigate()
     const HandleLogin = (event) => {
         event.preventDefault()
         signInWithEmailAndPassword(auth, email, password).then((userCred) => {
             console.log("loged in")
             SetEmail('')
             SetPassword('')
+            dispatch(SetCurrentUser(userCred.user))
+            
+            navigate('/user/'+userCred.user.displayName)
         })
     }
     return (

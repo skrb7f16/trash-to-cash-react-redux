@@ -12,6 +12,7 @@ import { getAuth } from 'firebase/auth';
 import UserComponent from './components/User/UserComponent';
 import AddProduct from './components/AddProduct/AddProduct';
 import Footer from './components/Footer/Footer';
+import MessageBar from './components/MessageBar/MessageBar';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           </Route>
         </Routes>
         <Footer />
+        <MessageBar />
       </BrowserRouter>
     </div>
   );

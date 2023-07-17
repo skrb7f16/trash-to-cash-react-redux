@@ -1,8 +1,6 @@
-import { useState } from 'react'
-import StepThree from './StepThree'
-import UploadWidget from './UploadWidget'
-import { useSelector } from 'react-redux'
 
+import React from 'react'
+import UploadWidget from './UploadWidget'
 export default function StepTwoPage(props) {
 
   const HandleGoBack=()=>{

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import data from '../../assets/trash-to-cash-20037-default-rtdb-feeds-export.json'
 import ProductFirstImage from './ProductFirstImage'
 import ProductDescriptions from './ProductDescriptions'
 import firebaseApp from '../../firebase-service'

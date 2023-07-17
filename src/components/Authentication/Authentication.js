@@ -5,11 +5,15 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 import {set,getDatabase, ref} from 'firebase/database'
 import { useNavigate } from 'react-router-dom'
 import firebaseApp from '../../firebase-service'
+import { useDispatch } from 'react-redux'
+import SetCurrentUser from '../../state/actionCreaters/UserAuthData'
+import ShowMessage from '../../state/actionCreaters/ShowMessage'
 export default function Authentication() {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     const db=getDatabase(firebaseApp,firebaseApp.options.databaseURL)
     const navigate=useNavigate()
+    const dispatch=useDispatch()
     const HandleGoogleSignin = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
@@ -22,6 +26,8 @@ export default function Authentication() {
                     rooms:[],
                     totalCredits:0
                 }).then(()=>{
+                    dispatch(SetCurrentUser(user))
+                    dispatch(ShowMessage({"message":"Logged in success as "+user.displayName,"type":'success'},'show'))
                     navigate("/user/"+user.displayName)
                 })
             }).catch((error) => {

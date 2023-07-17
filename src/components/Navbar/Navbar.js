@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import SetNavBar from '../../state/actionCreaters/NavBarSelectAction'
-import { getAuth } from 'firebase/auth'
+
 export default function Navbar() {
     const navSelect =useSelector(state=>state.NavBarSelectReducer)
     const dispatch=useDispatch()

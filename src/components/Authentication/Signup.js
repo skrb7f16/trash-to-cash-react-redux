@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import {getDatabase, ref, set} from 'firebase/database'
 import firebaseApp from '../../firebase-service'
+import { useDispatch } from 'react-redux'
+import SetCurrentUser from '../../state/actionCreaters/UserAuthData'
+import { useNavigate } from 'react-router-dom'
 export default function Signup(props) {
     const auth = getAuth()
     const [email,SetEmail]=useState("")
@@ -10,6 +13,8 @@ export default function Signup(props) {
     const [lastName,setLastName]=useState("")
     const [firstName,SetFirstName]=useState("")
     const db=getDatabase(firebaseApp,firebaseApp.options.databaseURL)
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
     const HandleSignup=(event)=>{
         event.preventDefault()
         createUserWithEmailAndPassword(auth,email,password).then((userCredential)=>{
@@ -28,6 +33,8 @@ export default function Signup(props) {
                     SetConfirmPassword('')
                     SetFirstName('')
                     setLastName('')
+                    dispatch(SetCurrentUser(user))
+                    navigate('/user/'+user.displayName)
                 })
                 
                 

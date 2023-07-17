@@ -8,6 +8,7 @@ import SetNavBar from '../../state/actionCreaters/NavBarSelectAction'
 import SingleItem from '../Items/SingleItem'
 import { getDatabase, ref, onValue } from 'firebase/database'
 import firebaseApp from '../../firebase-service'
+import ShowMessage from '../../state/actionCreaters/ShowMessage'
 
 
 export default function UserComponent() {
@@ -21,6 +22,7 @@ export default function UserComponent() {
     auth.signOut().then(() => {
       dispatch(SetCurrentUser(auth.currentUser))
       dispatch(SetNavBar("home"))
+      dispatch(ShowMessage({"message":"Logged out :c",type:'warning'},'show'))
       navigate("/")
     })
   }
@@ -31,8 +33,9 @@ export default function UserComponent() {
       if(data!==null){
         setItems([])
         Object.values(data).map(items=>{
-          if(items.byId===auth.currentUser.uid)
-          setItems(old=>[...old,items])
+          if(auth.currentUser!==null && items.byId===auth.currentUser.uid)
+          return setItems(old=>[...old,items])
+          else return null
         });
         
       } 
@@ -45,9 +48,7 @@ export default function UserComponent() {
         <div className="container">
           <h1 className="display-3">Hello, {user !== null ? user.displayName : "User"}</h1>
           <p>
-            This is a template for a simple marketing or informational website. It
-            includes a large callout called a jumbotron and three supporting pieces
-            of content. Use it as a starting point to create something more unique.
+            This your dashboard, Here you can manage your posts bank accounts linked and many other things
           </p>
           <p>
             <Link className="btn btn-primary btn-lg" to="/addAProduct" role="button">
