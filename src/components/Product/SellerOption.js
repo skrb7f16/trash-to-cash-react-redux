@@ -3,10 +3,10 @@ import {set,ref} from 'firebase/database'
 import { useNavigate } from 'react-router-dom'
 export default function SellerOption(props) {
 const navigate=useNavigate()
-  const HandleAcceptance=(reqId,by,to,mess,productId)=>{
+  const HandleAcceptance=(reqId,by,to,mess,productId,reqUsername)=>{
     set(ref(props.db,"/requests/"+reqId+"/accepted"),true).then(()=>{
       let temp=[]
-      temp.push({"message":mess,id:Math.round((new Date()).getTime() / 1000),'sender':by})
+      temp.push({"message":mess,id:Math.round((new Date()).getTime() / 1000),'senderId':by,"sender":reqUsername})
       let chatObj={
         messages:temp,
         productId,
@@ -40,7 +40,7 @@ const navigate=useNavigate()
           <td >{v.requesterUsername}</td>
           <td>{v.message}</td>
           <td>
-            {!v.accepted?<div className="btn btn-success" on onClick={()=>HandleAcceptance(v.requestId,v.requesterId,v.requestedToId,v.message,v.productId)}>Accept</div>:<div className="btn btn-primary" onClick={()=>HandleChat(v.requesterId,v.requestedToId)}>Chat</div>}
+            {!v.accepted?<div className="btn btn-success" on onClick={()=>HandleAcceptance(v.requestId,v.requesterId,v.requestedToId,v.message,v.productId,v.requesterUsername)}>Accept</div>:<div className="btn btn-primary" onClick={()=>HandleChat(v.requesterId,v.requestedToId)}>Chat</div>}
             <div className="text-center btn btn-danger">Delete</div>
           </td>
           

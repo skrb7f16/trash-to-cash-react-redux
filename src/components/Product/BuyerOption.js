@@ -3,12 +3,14 @@ import { v4 } from 'uuid'
 import {set,ref} from 'firebase/database'
 import { useDispatch } from 'react-redux'
 import ShowMessage from '../../state/actionCreaters/ShowMessage'
+import { useNavigate } from 'react-router-dom'
 export default function BuyerOption(props) {
     console.log(props)
     const [showReq, setShowReq] = useState(false)
     const [message,setMessage]=useState('')
     const [phone,setPhone]=useState('')
     const dispatch=useDispatch()
+    const navigate=useNavigate()
     const HandleShowRequestForm = (e) => {
         e.preventDefault()
         setShowReq(!showReq)
@@ -32,10 +34,15 @@ export default function BuyerOption(props) {
         set(ref(props.db,"/requests/"+req.requestId),req).then(()=>{
             dispatch(ShowMessage({message:'Successfull uploaded the request',type:'success'},'show'))
         })
+
+    
+    }
+    const TakeToChat=()=>{
+        navigate("/chat/"+props.product.id+props.product.byId+props.user.uid)
     }
     return (
         <div>
-            <div style={btnBox}>{props.reqMadeByCurrentUser?<div className='container bg-warning p-3 btn'>Request already made please wait for the response from user
+            <div style={btnBox} onClick={TakeToChat}>{props.reqMadeByCurrentUser?<div className='container bg-warning p-3 btn'>Request already made {props.reqMadeAccepted?"Click here to chat":"please wait for the response from user"}
 
             </div>:<button className="btn btn-primary" onClick={HandleShowRequestForm} >Interested to make a request</button>}
                 

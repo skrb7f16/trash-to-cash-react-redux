@@ -5,12 +5,14 @@ import NotLoggedInUserOption from './NotLoggedInUserOption'
 
 export default function ProductDescriptions(props) {
     const [reqMadeByCurrentUser,setRequestMadeByCurrentUser]=useState(false)
+    const [reqMadeAccepted,setReqMadeAccepted]=useState(false)
     useEffect(()=>{
         if(props.reqs.length>0){
-            for(let req in props.reqs){
-                if(req.requesterId===props.user.uid){
+            for(let i=0;i<props.reqs.length;i++){
+               
+                if(props.reqs[i].requesterId===props.user.uid){
                     setRequestMadeByCurrentUser(true)
-                    
+                    setReqMadeAccepted(props.reqs[i].accepted)
                     break;
                 }
             }
@@ -31,8 +33,9 @@ export default function ProductDescriptions(props) {
                 <p><b>Description</b></p>
                 <p>{props.product.desc}</p>
             </div>
-            {props.user !== null ? (props.user.uid === props.product.byId ? <SellerOption reqs={props.reqs} db={props.db} product={props.product} /> :
-                <BuyerOption product={props.product} user={props.user} db={props.db} reqMadeByCurrentUser={reqMadeByCurrentUser} />) : <NotLoggedInUserOption />}
+            {props.user !== null ? (props.user.uid === props.product.byId ? <SellerOption reqs={props.reqs} db={props.db} 
+            product={props.product} /> :
+                <BuyerOption product={props.product} user={props.user} db={props.db} reqMadeByCurrentUser={reqMadeByCurrentUser} reqMadeAccepted={reqMadeAccepted} />) : <NotLoggedInUserOption />}
 
         </div>
     )
