@@ -10,12 +10,16 @@ export default function Footer() {
 
 const footerStyle={
     main:{
-        width:'99vw',
+        width:'99.5vw',
         height:'10vh',
         backgroundColor:'#b2dead',
         margin:'auto',
         display:'flex',
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        position:'relative',
+        bottom:'0',
+        
+        
     }
 }

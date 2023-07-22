@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Items from './components/Items/Items';
@@ -13,6 +12,7 @@ import UserComponent from './components/User/UserComponent';
 import AddProduct from './components/AddProduct/AddProduct';
 import Footer from './components/Footer/Footer';
 import MessageBar from './components/MessageBar/MessageBar';
+import Chat from './components/Chat/Chat';
 
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
           <Route path='/addAProduct' element={<AddProduct/>}></Route>
           <Route path='/item/:id/:name' element={<Product/>}></Route>
           <Route path='/user/:name' element = {<UserComponent />} />
+          <Route path='/chat/:id' element={<Chat />}/>
           <Route path='/' element={<Home />}>
           </Route>
         </Routes>

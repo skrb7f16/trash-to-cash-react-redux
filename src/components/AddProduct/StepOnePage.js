@@ -37,6 +37,7 @@ export default function StepOnePage(props) {
       id:id.length<=1?v4():id,
       taken:false,
       byId:getAuth().currentUser.uid,
+      by:getAuth().currentUser.displayName,
       pics:[
         "https://source.unsplash.com/random/?"+type
       ]

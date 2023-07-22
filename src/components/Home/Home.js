@@ -16,7 +16,7 @@ export default function Home() {
 
         </div>
         <div className='carousel-caption'>
-        <Link type="submit" className="btn border-dark" to="/auth">
+        <Link type="submit" className="btn border-dark" to="/auth" style={{'position':'relative',top:'-3vh'}}>
           <h1>
           Get Started
             </h1>
