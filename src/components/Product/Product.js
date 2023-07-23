@@ -12,7 +12,7 @@ export default function Product(props) {
   const params=useParams()
   const [currProduct,setCurrProduct]=useState(null)
   const [reqs,setReqs]=useState([])
-
+  const [ready,setReady]=useState(false)
   const fetchProduct=(refe)=>{
     onValue(refe,(snapshot)=>{
       const data=snapshot.val()
@@ -34,16 +34,18 @@ export default function Product(props) {
         }
       })
       setReqs(temp)
+      setReady(true)
     })
   }
   useEffect(()=>{
+    setReady(false)
     const refe=ref(db,"/feeds/"+params.id)
     fetchProduct(refe)
     const reqRef=ref(db,"/requests")
     fetchRequests(reqRef)
       
   },[])
-  if(currProduct===null)return "LOADING"
+  if(!ready)return "LOADING"
   return (
     <div className='container' style={productStyle} >
     <ProductFirstImage pics={currProduct.pics}/>

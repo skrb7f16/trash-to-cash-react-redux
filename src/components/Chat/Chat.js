@@ -12,13 +12,16 @@ export default function Chat() {
   const [chatObj, setChatObj] = useState(null)
   const [message,setMessage]=useState('')
   const bottomRef=useRef(null)
+ 
   const refe = "/chats/" + params.id
   useEffect(() => {
+
+      onValue(ref(db, refe), (snapshot) => {
+        setChatObj(snapshot.val())
+        console.log(bottomRef)
+      })
+
     
-    onValue(ref(db, refe), (snapshot) => {
-      setChatObj(snapshot.val())
-      bottomRef.current?.scrollIntoView({block:'start'})
-    })
 
     
   }, [])
@@ -35,7 +38,7 @@ export default function Chat() {
       tempObj.push(temp)
       set(ref(db,refe+"/messages"),tempObj).then(()=>{
         setMessage('')
-        
+        bottomRef.current?.lastElementChild?.scrollIntoView({behaviour:'smooth'})
       })
     }
   }
@@ -53,10 +56,10 @@ export default function Chat() {
                   <h5 className="mb-0">{chatObj.productName}</h5>
 
                 </div>
-                <div className="card-body scrollspy"
+                <div className="card-body"
                   data-mdb-perfect-scrollbar="true"
-                  style={{ position: "relative", height: 400 , overflowY:'scroll'}}
-                  ref={bottomRef}
+                  style={{ position: "relative", height: 400 , overflowY:'scroll',}}
+                  ref={el=>{bottomRef.current=el; bottomRef.current?.lastElementChild?.scrollIntoView({behaviour:'smooth'})} }
                   >
                   {chatObj.messages.map((v)=>{
                     if(v.senderId===user.uid)return <OurSide message={v} key={v.id}/>

@@ -21,7 +21,7 @@ export default function ProductDescriptions(props) {
     return (
         <div className="container" style={productDesc}>
             <h1>{props.product.title}</h1>
-            <h7><i>(under {props.product.type} category)</i></h7>
+            <h6><i>(under {props.product.type} category)</i></h6>
             <div style={price}>
                 <b>Price:- </b>{props.product.price}
             </div>
