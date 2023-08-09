@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SingleItem from './SingleItem'
 import { getDatabase, ref, onValue} from 'firebase/database'
 import firebaseApp from '../../firebase-service'
-
+import {SortByDate} from './utils/SortingFunctions'
 function parseISOString(s) {
 
   var b = s.split(/\D+/);
@@ -29,9 +29,7 @@ export default function Items() {
         });
         tempItem.sort((a,b)=>{
           
-          let temp1=parseISOString(a['at'])
-          let temp2=parseISOString(b['at'])
-          return temp1<temp2?1:-1
+          return SortByDate(a,b)
         })
         setItem(tempItem)
         

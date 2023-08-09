@@ -37,7 +37,6 @@ export default function UserComponent() {
           return setItems(old=>[...old,items])
           else return null
         });
-        
       } 
     });
 
@@ -51,12 +50,15 @@ export default function UserComponent() {
             This your dashboard, Here you can manage your posts bank accounts linked and many other things
           </p>
           <p>
-            <Link className="btn btn-primary btn-lg" to="/addAProduct" role="button">
+            <Link className="btn btn-primary btn-lg m-2" to="/addAProduct" role="button">
               Post
             </Link>
-            <span className="btn btn-danger btn-lg" role="button" onClick={HandleLogout}>
+            <span className="btn btn-danger btn-lg m-2" role="button" onClick={HandleLogout}>
               Logout
             </span>
+            <Link className="btn btn-success btn-lg m-2" to="/chats" role="button">
+              My Chats
+            </Link>
           </p>
         </div>
       </div>
@@ -75,7 +77,7 @@ export default function UserComponent() {
 
 const ItemBoxStyle = {
   display: 'flex',
-  justifyContent: 'space-around',
+  justifyContent: 'flex-start',
   alignItems: 'center',
   flexWrap: 'wrap',
   margin: '10px',

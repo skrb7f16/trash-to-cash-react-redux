@@ -7,7 +7,8 @@ export default function ProductDescriptions(props) {
     const [reqMadeByCurrentUser,setRequestMadeByCurrentUser]=useState(false)
     const [reqMadeAccepted,setReqMadeAccepted]=useState(false)
     useEffect(()=>{
-        if(props.reqs.length>0){
+        if(props.reqs.length>0 && props.user!==null){
+            
             for(let i=0;i<props.reqs.length;i++){
                
                 if(props.reqs[i].requesterId===props.user.uid){
@@ -35,7 +36,7 @@ export default function ProductDescriptions(props) {
             </div>
             {props.user !== null ? (props.user.uid === props.product.byId ? <SellerOption reqs={props.reqs} db={props.db} 
             product={props.product} /> :
-                <BuyerOption product={props.product} user={props.user} db={props.db} reqMadeByCurrentUser={reqMadeByCurrentUser} reqMadeAccepted={reqMadeAccepted} />) : <NotLoggedInUserOption />}
+                <BuyerOption product={props.product} user={props.user} db={props.db} reqMadeByCurrentUser={reqMadeByCurrentUser} reqMadeAccepted={reqMadeAccepted} setRequestMadeByCurrentUser={setRequestMadeByCurrentUser}/>) : <NotLoggedInUserOption />}
 
         </div>
     )

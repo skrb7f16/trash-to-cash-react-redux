@@ -33,6 +33,11 @@ export default function BuyerOption(props) {
         }
         set(ref(props.db,"/requests/"+req.requestId),req).then(()=>{
             dispatch(ShowMessage({message:'Successfull uploaded the request',type:'success'},'show'))
+            setMessage('')
+            setPhone('')
+            setShowReq(!showReq)
+            props.setRequestMadeByCurrentUser(true)
+            
         })
 
     
@@ -42,7 +47,7 @@ export default function BuyerOption(props) {
     }
     return (
         <div>
-            <div style={btnBox} onClick={TakeToChat}>{props.reqMadeByCurrentUser?<div className='container bg-warning p-3 btn'>Request already made {props.reqMadeAccepted?"Click here to chat":"please wait for the response from user"}
+            <div style={btnBox} >{props.reqMadeByCurrentUser?<div className='container bg-warning p-3 btn'>Request already made {props.reqMadeAccepted?<div onClick={TakeToChat}>Click here to chat</div>:"please wait for the response from user"}
 
             </div>:<button className="btn btn-primary" onClick={HandleShowRequestForm} >Interested to make a request</button>}
                 

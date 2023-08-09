@@ -13,7 +13,7 @@ import AddProduct from './components/AddProduct/AddProduct';
 import Footer from './components/Footer/Footer';
 import MessageBar from './components/MessageBar/MessageBar';
 import Chat from './components/Chat/Chat';
-
+import ChatDashBoard from './components/Chat/ChatsDashBoard'
 
 function App() {
   const dispatch=useDispatch()
@@ -38,6 +38,7 @@ function App() {
           <Route path='/item/:id/:name' element={<Product/>}></Route>
           <Route path='/user/:name' element = {<UserComponent />} />
           <Route path='/chat/:id' element={<Chat />}/>
+          <Route path='/chats' element={<ChatDashBoard />}/>
           <Route path='/' element={<Home />}>
           </Route>
         </Routes>

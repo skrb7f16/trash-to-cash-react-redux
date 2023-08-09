@@ -10,7 +10,11 @@ const navigate=useNavigate()
       let chatObj={
         messages:temp,
         productId,
-        productName:props.product.title
+        productName:props.product.title,
+        buyer:reqUsername,
+        buyerId:by,
+        sellerId:to,
+        chatId:props.product.id+to+by
       }
       set(ref(props.db,"/chats/"+props.product.id+to+by),chatObj).then(()=>{
         console.log("hello")

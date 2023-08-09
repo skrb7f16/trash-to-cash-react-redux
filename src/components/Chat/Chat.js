@@ -32,7 +32,7 @@ export default function Chat() {
         message,
         senderId:user.uid,
         sender:user.displayName,
-        id:Math.round((new Date()).getTime() / 1000)
+        id:Math.round((new Date()).getTime())
       }
       const tempObj=chatObj.messages
       tempObj.push(temp)
