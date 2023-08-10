@@ -1,0 +1,19 @@
+.itemBoxStyle{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+    overflow-y:hidden;
+    width:95vw;
+    min-height:100vh
+  }
+
+  .search-bar-style{
+    display: flex;
+    width: 35%;
+    justify-content: space-around;
+    border:1px solid black;
+    border-radius: 10px;
+
+  }
