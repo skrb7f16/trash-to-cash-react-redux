@@ -10,7 +10,7 @@ export default function OtherSide(props) {
         return date.toLocaleString([], { month: 'long' });
       }
     const ChangeDateTime=(s)=>{
-        var t = new Date(s * 1000);
+        var t = new Date(s);
         var formatted = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2) +" "+ t.getDate()+" " +getMonthName(t.getMonth())+" "+t.getFullYear();
         return formatted
     }

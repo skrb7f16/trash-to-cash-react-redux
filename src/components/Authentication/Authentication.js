@@ -17,8 +17,6 @@ export default function Authentication() {
     const HandleGoogleSignin = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-
-                
                 const user=result.user
                 set(ref(db,"/Users/"+user.uid),{
                     userId:user.uid,

@@ -9,7 +9,7 @@ export default function OurSide(props) {
         return date.toLocaleString([], { month: 'long' });
       }
     const ChangeDateTime=(s)=>{
-        var t = new Date(s * 1000);
+        var t = new Date(s);
         var formatted = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2) +" "+ t.getDate()+" " +getMonthName(t.getMonth())+" "+t.getFullYear();
         return formatted
     }
@@ -21,7 +21,7 @@ export default function OurSide(props) {
             </div>
             <div className="d-flex flex-row justify-content-end mb-4 pt-1">
                 <div>
-                    <p className="small p-2 me-3 mb-3 text-white rounded-3 bg-warning">
+                    <p className="small p-2 me-3 mb-3 text-white rounded-3 bg-success">
                         {props.message.message}
                     </p>
                 </div>

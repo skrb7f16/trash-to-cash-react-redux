@@ -6,7 +6,7 @@ const navigate=useNavigate()
   const HandleAcceptance=(reqId,by,to,mess,productId,reqUsername)=>{
     set(ref(props.db,"/requests/"+reqId+"/accepted"),true).then(()=>{
       let temp=[]
-      temp.push({"message":mess,id:Math.round((new Date()).getTime() / 1000),'senderId':by,"sender":reqUsername})
+      temp.push({"message":mess,id:Math.round((new Date()).getTime()),'senderId':by,"sender":reqUsername})
       let chatObj={
         messages:temp,
         productId,
@@ -14,7 +14,8 @@ const navigate=useNavigate()
         buyer:reqUsername,
         buyerId:by,
         sellerId:to,
-        chatId:props.product.id+to+by
+        chatId:props.product.id+to+by,
+        requestToSell:false
       }
       set(ref(props.db,"/chats/"+props.product.id+to+by),chatObj).then(()=>{
         console.log("hello")

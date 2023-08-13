@@ -40,7 +40,7 @@ export default function Items() {
         setItem([])
         var tempItem = []
         Object.values(data).map(items => {
-
+          if(items.taken===false)
           return tempItem.push(items)
 
         });
